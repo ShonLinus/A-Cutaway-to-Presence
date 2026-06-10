@@ -27,11 +27,27 @@
       width: min(100%, 1120px);
       line-height: 0;
       background: #fff;
+      position: relative;
+      /* 16:9 aspect ratio to prevent layout shift while loading */
+      aspect-ratio: 2400 / 1350;
     }
     .page img {
       display: block;
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: contain;
+      background: #fff;
+    }
+    /* Loading placeholder - subtle animation while image loads */
+    .page img:not([loaded]):not([data-error]) {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 37%, #f0f0f0 63%);
+      background-size: 400% 100%;
+      animation: shimmer 1.4s ease-in-out infinite;
+      min-height: 100%;
+    }
+    @keyframes shimmer {
+      0% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
     @media print {
       html, body, main { background: #fff; }
@@ -48,38 +64,80 @@
 <body>
   <main aria-label="A Cutaway to Presence PDF pages">
       <section class="page" aria-label="Page 1">
-        <img src="a-cutaway-to-presence-assets/page-01.webp" width="2400" height="1350" alt="Page 1">
+        <img src="a-cutaway-to-presence-assets/page-01.webp" width="2400" height="1350" alt="Page 1" loading="lazy" decoding="async">
       </section>
       <section class="page" aria-label="Page 2">
-        <img src="a-cutaway-to-presence-assets/page-02.webp" width="2400" height="1350" alt="Page 2">
+        <img src="a-cutaway-to-presence-assets/page-02.webp" width="2400" height="1350" alt="Page 2" loading="lazy" decoding="async">
       </section>
       <section class="page" aria-label="Page 3">
-        <img src="a-cutaway-to-presence-assets/page-03.webp" width="2400" height="1350" alt="Page 3">
+        <img src="a-cutaway-to-presence-assets/page-03.webp" width="2400" height="1350" alt="Page 3" loading="lazy" decoding="async">
       </section>
       <section class="page" aria-label="Page 4">
-        <img src="a-cutaway-to-presence-assets/page-04.webp" width="2400" height="1350" alt="Page 4">
+        <img src="a-cutaway-to-presence-assets/page-04.webp" width="2400" height="1350" alt="Page 4" loading="lazy" decoding="async">
       </section>
       <section class="page" aria-label="Page 5">
-        <img src="a-cutaway-to-presence-assets/page-05.webp" width="2400" height="1350" alt="Page 5">
+        <img src="a-cutaway-to-presence-assets/page-05.webp" width="2400" height="1350" alt="Page 5" loading="lazy" decoding="async">
       </section>
       <section class="page" aria-label="Page 6">
-        <img src="a-cutaway-to-presence-assets/page-06.webp" width="2400" height="1350" alt="Page 6">
+        <img src="a-cutaway-to-presence-assets/page-06.webp" width="2400" height="1350" alt="Page 6" loading="lazy" decoding="async">
       </section>
       <section class="page" aria-label="Page 7">
-        <img src="a-cutaway-to-presence-assets/page-07.webp" width="2400" height="1350" alt="Page 7">
+        <img src="a-cutaway-to-presence-assets/page-07.webp" width="2400" height="1350" alt="Page 7" loading="lazy" decoding="async">
       </section>
       <section class="page" aria-label="Page 8">
-        <img src="a-cutaway-to-presence-assets/page-08.webp" width="2400" height="1350" alt="Page 8">
+        <img src="a-cutaway-to-presence-assets/page-08.webp" width="2400" height="1350" alt="Page 8" loading="lazy" decoding="async">
       </section>
       <section class="page" aria-label="Page 9">
-        <img src="a-cutaway-to-presence-assets/page-09.webp" width="2400" height="1350" alt="Page 9">
+        <img src="a-cutaway-to-presence-assets/page-09.webp" width="2400" height="1350" alt="Page 9" loading="lazy" decoding="async">
       </section>
       <section class="page" aria-label="Page 10">
-        <img src="a-cutaway-to-presence-assets/page-10.webp" width="2400" height="1350" alt="Page 10">
+        <img src="a-cutaway-to-presence-assets/page-10.webp" width="2400" height="1350" alt="Page 10" loading="lazy" decoding="async">
       </section>
       <section class="page" aria-label="Page 11">
-        <img src="a-cutaway-to-presence-assets/page-11.webp" width="2400" height="1350" alt="Page 11">
+        <img src="a-cutaway-to-presence-assets/page-11.webp" width="2400" height="1350" alt="Page 11" loading="lazy" decoding="async">
       </section>
   </main>
+
+  <script>
+    // Image loading retry mechanism
+    // If an image fails to load, retry up to 3 times with exponential backoff
+    document.querySelectorAll('img').forEach(function(img) {
+      img.dataset.retries = '0';
+
+      img.addEventListener('load', function() {
+        img.setAttribute('loaded', '');
+      });
+
+      img.addEventListener('error', function() {
+        var retries = parseInt(img.dataset.retries || '0', 10);
+        if (retries < 3) {
+          retries++;
+          img.dataset.retries = String(retries);
+          // Exponential backoff: 500ms, 1000ms, 2000ms
+          var delay = 500 * Math.pow(2, retries - 1);
+          setTimeout(function() {
+            // Add cache-buster to the URL
+            var src = img.getAttribute('src');
+            var separator = src.indexOf('?') === -1 ? '?' : '&';
+            img.src = src + separator + 'retry=' + retries + '&_t=' + Date.now();
+          }, delay);
+        } else {
+          // Max retries reached - show a solid background instead of broken icon
+          img.setAttribute('data-error', '1');
+          // Replace src with a tiny transparent placeholder
+          img.style.background = '#fff';
+          img.removeAttribute('src');
+          // Add a friendly message
+          var parent = img.parentNode;
+          if (parent) {
+            var msg = document.createElement('div');
+            msg.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#999;font-size:14px;padding:20px;text-align:center;line-height:1.5;';
+            msg.textContent = '图片加载中，请刷新页面重试';
+            parent.appendChild(msg);
+          }
+        }
+      });
+    });
+  </script>
 </body>
 </html>
