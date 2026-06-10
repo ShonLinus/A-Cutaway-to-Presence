@@ -7,7 +7,6 @@
   <style>
     :root {
       color-scheme: light dark;
-      --page-shadow: 0 18px 48px rgba(0, 0, 0, .22);
       --bg: #d8d6d0;
     }
     * { box-sizing: border-box; }
@@ -21,13 +20,12 @@
     main {
       width: min(100%, 1320px);
       margin: 0 auto;
-      padding: clamp(16px, 3vw, 40px) clamp(12px, 2.4vw, 32px);
+      padding: 0;
     }
     .page {
-      margin: 0 auto clamp(18px, 3vw, 36px);
+      margin: 0 auto;
       width: min(100%, 1120px);
       line-height: 0;
-      box-shadow: var(--page-shadow);
       background: #fff;
     }
     .page img {
@@ -41,7 +39,6 @@
       .page {
         width: 100%;
         margin: 0;
-        box-shadow: none;
         page-break-after: always;
       }
       .page:last-child { page-break-after: auto; }
@@ -51,37 +48,37 @@
 <body>
   <main aria-label="A Cutaway to Presence PDF pages">
       <section class="page" aria-label="Page 1">
-        <img src="a-cutaway-to-presence-assets/page-01.png" width="2400" height="1350" alt="Page 1">
+        <img src="a-cutaway-to-presence-assets/page-01.jpg" width="2400" height="1350" alt="Page 1" loading="lazy">
       </section>
       <section class="page" aria-label="Page 2">
-        <img src="a-cutaway-to-presence-assets/page-02.png" width="2400" height="1350" alt="Page 2">
+        <img src="a-cutaway-to-presence-assets/page-02.jpg" width="2400" height="1350" alt="Page 2" loading="lazy">
       </section>
       <section class="page" aria-label="Page 3">
-        <img src="a-cutaway-to-presence-assets/page-03.png" width="2400" height="1350" alt="Page 3">
+        <img src="a-cutaway-to-presence-assets/page-03.jpg" width="2400" height="1350" alt="Page 3" loading="lazy">
       </section>
       <section class="page" aria-label="Page 4">
-        <img src="a-cutaway-to-presence-assets/page-04.png" width="2400" height="1350" alt="Page 4">
+        <img src="a-cutaway-to-presence-assets/page-04.jpg" width="2400" height="1350" alt="Page 4" loading="lazy">
       </section>
       <section class="page" aria-label="Page 5">
-        <img src="a-cutaway-to-presence-assets/page-05.png" width="2400" height="1350" alt="Page 5">
+        <img src="a-cutaway-to-presence-assets/page-05.jpg" width="2400" height="1350" alt="Page 5" loading="lazy">
       </section>
       <section class="page" aria-label="Page 6">
-        <img src="a-cutaway-to-presence-assets/page-06.png" width="2400" height="1350" alt="Page 6">
+        <img src="a-cutaway-to-presence-assets/page-06.jpg" width="2400" height="1350" alt="Page 6" loading="lazy">
       </section>
       <section class="page" aria-label="Page 7">
-        <img src="a-cutaway-to-presence-assets/page-07.png" width="2400" height="1350" alt="Page 7">
+        <img src="a-cutaway-to-presence-assets/page-07.jpg" width="2400" height="1350" alt="Page 7" loading="lazy">
       </section>
       <section class="page" aria-label="Page 8">
-        <img src="a-cutaway-to-presence-assets/page-08.png" width="2400" height="1350" alt="Page 8">
+        <img src="a-cutaway-to-presence-assets/page-08.jpg" width="2400" height="1350" alt="Page 8" loading="lazy">
       </section>
       <section class="page" aria-label="Page 9">
-        <img src="a-cutaway-to-presence-assets/page-09.png" width="2400" height="1350" alt="Page 9">
+        <img src="a-cutaway-to-presence-assets/page-09.jpg" width="2400" height="1350" alt="Page 9" loading="lazy">
       </section>
       <section class="page" aria-label="Page 10">
-        <img src="a-cutaway-to-presence-assets/page-10.png" width="2400" height="1350" alt="Page 10">
+        <img src="a-cutaway-to-presence-assets/page-10.jpg" width="2400" height="1350" alt="Page 10" loading="lazy">
       </section>
       <section class="page" aria-label="Page 11">
-        <img src="a-cutaway-to-presence-assets/page-11.png" width="2400" height="1350" alt="Page 11">
+        <img src="a-cutaway-to-presence-assets/page-11.jpg" width="2400" height="1350" alt="Page 11" loading="lazy">
       </section>
   </main>
 </body>
