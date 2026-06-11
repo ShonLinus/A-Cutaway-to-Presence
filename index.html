@@ -54,6 +54,12 @@
       0% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+    /* 第 4 张风景、第 5 张小孩拿红色气球：增大视觉间距 */
+    .page.page-gap {
+      margin-top: 80px !important;
+      padding-top: 0;
+    }
+
     @media print {
       html, body, main { background: #fff; }
       main { width: 100%; padding: 0; }
@@ -77,10 +83,10 @@
       <section class="page" aria-label="Page 3">
         <img src="a-cutaway-to-presence-assets/page-03.webp" width="2400" height="1350" alt="Page 3" loading="lazy" decoding="async">
       </section>
-      <section class="page" aria-label="Page 4">
+      <section class="page page-gap" aria-label="Page 4">
         <img src="a-cutaway-to-presence-assets/page-04.webp" width="2400" height="1350" alt="Page 4" loading="lazy" decoding="async">
       </section>
-      <section class="page" aria-label="Page 5">
+      <section class="page page-gap" aria-label="Page 5">
         <img src="a-cutaway-to-presence-assets/page-05.webp" width="2400" height="1350" alt="Page 5" loading="lazy" decoding="async">
       </section>
       <section class="page" aria-label="Page 6">
