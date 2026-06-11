@@ -23,13 +23,18 @@
       padding: 0;
     }
     .page {
-      margin: 0 auto;
+      margin: 14px auto 0;
       width: min(100%, 1120px);
       line-height: 0;
       background: #fff;
       position: relative;
       /* 16:9 aspect ratio to prevent layout shift while loading */
       aspect-ratio: 2400 / 1350;
+    }
+    /* 第 4 张风景、第 5 张小孩拿红色气球：增大视觉间距 */
+    main > section:nth-child(4),
+    main > section:nth-child(5) {
+      margin-top: 40px;
     }
     .page img {
       display: block;
